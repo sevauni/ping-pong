@@ -1,6 +1,7 @@
 #include <SPI.h>  
 #include <Adafruit_GFX.h>
 #include <Adafruit_PCD8544.h> 
+#include <vector>
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(5, 4, 3);   //инициализация экрана
 
@@ -26,8 +27,8 @@ int fix_pause_counter = 0;
 float ball_x = 41;
 float ball_y = 23;
 
-float naprav_x = 1;
-float naprav_y = 1;
+double naprav_x = 1;
+double naprav_y = 1;
 
 float speed = 3;
 double angle;
@@ -47,7 +48,16 @@ unsigned long previous_time_main = 0;
 unsigned long previous_time_speed = 0;
 unsigned long previous_time_platform = 0;
 
-
+int Landing_point(int X, int Y, double an, bool vpravo){
+  int distance;
+  if(vpravo) distance_x = 84 - X;
+  int distanse_y = distanse_x * tg(an) + Y;
+  bool reverse;
+  if((distanse_y/48) % 2 != 0) reverse = true;
+  distance_y = abs(distance_y % 48);
+  if(reverse) distanse_y = 48 - distanse_y;
+  return disance_y;
+}
 
 
 void setup()   {
