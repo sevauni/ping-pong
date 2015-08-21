@@ -1,15 +1,16 @@
 #include <math.h>
-#include <iostream>
 #include <wiringPi.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctime>   
 #include "PCD8544.h"
 
 
 #define DISPLAY_WIDTH 84
 #define DISPLAY_HIGHT 48
+const int ticks_per_msec = CLOCKS_PER_SEC / 1000;   
   
 #define pad1 1
 #define pad2 2
@@ -60,14 +61,16 @@ unsigned long previous_time_main = 0;
 unsigned long previous_time_speed = 0;
 unsigned long previous_time_platform = 0;
 
-long my_mills(){}
+long long int my_mills(){
+return clock()/ticks_per_msec;
+}
 
 int min(int a,int b){
-return (a > b) ? a : b;
+return (a < b) ? a : b;
 }
 
 int max(int a,int b){
-return (a < b) ? a : b;
+return (a > b) ? a : b;
 }
 
 int constrain(int x,int a,int b){
@@ -120,7 +123,7 @@ bot_flag = true;
 
 
 speed = 3;
-angle = analogRead(0)*pi/1024;
+angle = (rand()%1000)*pi/1000;
 
 
 if(angle >0 && angle < pi / 8){
@@ -195,7 +198,7 @@ player2 = player2 + 1;
 }
 
 }
-
+/*
 int  pad_state(int pin){
 static int prev;
 int sval = 0;
@@ -208,53 +211,35 @@ prev = sval;
 }
 
 return prev / 31;
-}
 
+}
+*/
 void platform_motion(){
-  cout << "niga";        
-if( platform_1 - pad_state(pad1) > 0){
-
-platform_1--;
-
-}else if(platform_1 - pad_state(pad1) < 0){
-
-platform_1++;
-
-}
-
-if (digitalRead(12) != 0){
-platform_1++;
-}
-if (digitalRead(13) != 0){
-platform_1--;
-}
-
-platform_1 = constrain(platform_1, 0, 32);
-
-//bot section
-int pad_state_temp = pad_state(pad2);
-
-
-if(bot_enabled == true){
-
-pad_state_temp = bot_y;
-
-}
-
-
  
-if( platform_2 - pad_state_temp > 0){
+if( digitalRead(13) != 0){
+
+platform_1--;
+
+}else if(digitalRead(12) != 0){
+
+platform_1++;
+
+}
+
+if( digitalRead(6) != 0){
 
 platform_2--;
 
-}else if(platform_2 - pad_state_temp < 0){
+}else if(digitalRead(5) != 0){
 
 platform_2++;
 
 }
 
-platform_2 = constrain(platform_2, 0, 32);
-      
+
+
+platform_1 = constrain(platform_1, 0, 32);
+platform_2 = constrain(platform_2, 0, 32);      
       
 
 }
@@ -457,7 +442,8 @@ LCDdisplay();
 }
 
 int main(void) { 
-
+ pinMode (6, INPUT);
+ pinMode (5, INPUT); 
  pinMode (12, INPUT);
  pinMode (13, INPUT); 
 
@@ -519,6 +505,7 @@ if(my_pause == false){
   
   //bot();
   platform_motion();
+
   }
 
 }else{
