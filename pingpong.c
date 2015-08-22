@@ -7,6 +7,11 @@
 #include <ctime>   
 #include "PCD8544.h"
 
+sdf
+/*test github*/
+
+
+sososos
 
 #define DISPLAY_WIDTH 84
 #define DISPLAY_HIGHT 48
@@ -85,6 +90,7 @@ if(a > pi * 1000) a -= 2 * pi * 1000;
 
 return double(a)/1000;
 }
+
 
 int Landing_point(int X, int Y, double an, bool vpravo){
   int distance_x;
@@ -473,7 +479,6 @@ menu_logic();           //работа с меню
 
 
 }else{ 
-
 
 
  
