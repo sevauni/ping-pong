@@ -7,7 +7,7 @@
 #include <ctime>   
 #include "PCD8544.h"
 
-sdf
+
 /*test github*/
 
 
@@ -15,6 +15,7 @@ sososos
 
 #define DISPLAY_WIDTH 84
 #define DISPLAY_HIGHT 48
+
 const int ticks_per_msec = CLOCKS_PER_SEC / 1000;   
   
 #define pad1 1
